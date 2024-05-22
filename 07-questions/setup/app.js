@@ -7,7 +7,8 @@ questions.forEach(function(question){
     const btn = question.querySelector(".question-btn");
     btn.addEventListener("click", function(){
         questions.forEach(function(item){
-            item.classList.remove("show-text")
+            if (item != question)
+                item.classList.remove("show-text")
         });
         question.classList.toggle("show-text");
     })
