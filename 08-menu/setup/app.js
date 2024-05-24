@@ -72,3 +72,57 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+const sectionCenter = document.querySelector(".section-center");
+const btnContainer = document.querySelector(".btn-container");
+
+window.addEventListener("DOMContentLoaded", function () {
+  displayMenuItems(menu);
+  displayBtns();
+});
+
+
+
+function displayBtns() {
+  let categories = Array.from(new Set(menu.map(item => item.category)))
+  categories.unshift("All");
+  let displayBtns = categories.map(function (category) {
+    return `<button class="filter-btn" type="button" data-id="${category}">${category}</button>`;
+  }).join("");
+  btnContainer.innerHTML = displayBtns;
+
+  const filterBtns = document.querySelectorAll(".filter-btn");
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      const category = e.currentTarget.dataset.id;
+      if (category === "All") {
+        displayMenuItems(menu);
+        return;
+      }
+      else
+        filteredMenu = menu.filter(item => item.category == category);
+      displayMenuItems(filteredMenu);
+    })
+  });
+}
+
+function displayMenuItems(menuItems) {
+  let displayMenu = menuItems.map(function (item) {
+
+    return ` <article class="menu-item">
+    <img src=${item.img} alt=${item.title} class="photo">
+    <div class="item-info">
+      <header>
+        <h4>${item.title}</h4>
+        <h4 class="price">${item.price}</h4>
+      </header>
+      <p class="item-text">
+        ${item.desc}
+      </p>
+    </div>
+  </article>`;
+  }).join("");
+
+  sectionCenter.innerHTML = displayMenu;
+}
